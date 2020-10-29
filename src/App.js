@@ -8,7 +8,8 @@ import {listen} from './app/listener'
 
 import Home from './pages/Home';
 import Register from './pages/Register';
-
+import RegisterSuccess from './pages/RegisterSuccess';
+import Login from './pages/Login'
 
 function App() {
 
@@ -22,8 +23,15 @@ function App() {
    <Provider store={store}>
      <Router>
        <Switch>
-         <Route path="/register" component={Register} />
-         <Route path="/" component={Home}/>
+       <Route path="/" component={Home} exact />
+         <Route path="/register" component={Register} exact />
+         <Route path="/register/berhasil">
+           <RegisterSuccess />
+         </Route>
+         <Route path="/login">
+           <Login />
+         </Route>
+      
        </Switch>
      </Router>
    </Provider>
