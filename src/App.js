@@ -10,13 +10,15 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import RegisterSuccess from './pages/RegisterSuccess';
 import Login from './pages/Login'
+import { getCart } from "./api/cart";
+
 
 function App() {
 
   // panggil func listen sekali aja kekita komponen selesai dirender pertama kali
   useEffect(() => {
     listen()
-    
+    getCart();
   }, [])
 
   return (

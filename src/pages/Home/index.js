@@ -1,34 +1,41 @@
 import React , {useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { SideNav, LayoutSidebar , Responsive, CardProduct, Pagination , InputText } from "upkit";
+import { SideNav, LayoutSidebar , Responsive, CardProduct, Pagination , InputText , Pill } from "upkit";
 import menus from "./menus";
 import TopBar from '../../components/TopBar'
 import {config} from '../../config'
-import { fetchProducts, goToNextPage, setPage, goToPrevPage, setKeyword, setCategory } from "../../features/Products/actions";
-import BounceLoader from 'react-spinners/BounceLoader'
+import { fetchProducts, goToNextPage, setPage, goToPrevPage, setKeyword, setCategory, toggleTag } from "../../features/Products/actions";
+import BounceLoader from 'react-spinners/BounceLoader';
+import { tags } from "./tags";
+import Cart from '../../components/Cart'
+import { addItem , removeItem} from "../../features/Cart/actions";
 
 export default function Home() {
    
     let dispatch = useDispatch()
     let  products = useSelector(state => state.products);
-   
+    let cart = useSelector(state => state.cart);
+
     useEffect(() => {
         dispatch(fetchProducts())
-    }, [dispatch, products.currentPage, products.keyword, products.category])
+    }, [dispatch, products.currentPage, products.keyword, products.category, products.tags])
 
     return (
         <div>
            <LayoutSidebar  
-           sidebar={<SideNav 
-                    color="blue" 
-                    items={menus}  
-                    verticalAlign="top"
-                    active={products.category}
-                    onChange={category => dispatch(setCategory(category))}
-                />}
+           sidebar={
+                        <SideNav 
+                                    color="blue" 
+                                    items={menus}  
+                                    verticalAlign="top"
+                                    active={products.category}
+                                    onChange={category => dispatch(setCategory(category))}
+                                />
+            }
            content={<div className="md:flex  md:flex-row-reverse w-full mr-5 h-full min-h-screen">
 
                 <div className="w-full md:w-3/4 pl-5 pb-10">  
+                
                    <TopBar />
 
                    <div className="w-full text-center mb-10 mt-5">
@@ -40,6 +47,21 @@ export default function Home() {
                         onChange={e => dispatch(setKeyword(e.target.value))}
                    />
                    </div>
+
+
+                <div className="mb-5 pl-2 flex w-3/3 overflow-auto pb-5">
+                   {tags[products.category].map((tag, index) => {
+                       return <div key={index}>
+                           <Pill
+                            text ={tag}
+                            icon = {tag.slice(0,1).toUpperCase()}
+                            isActive={products.tags.includes(tag)}
+                            onClick={_=>dispatch(toggleTag(tag))}
+                           
+                           />
+                       </div>
+                   })}
+                </div>
 
                    {products.status === 'process' && !products.data.length ? 
                         <div className="flex justify-center">
@@ -56,7 +78,7 @@ export default function Home() {
                                     title={product.name}
                                     imgUrl={`${config.api_host}/upload/${product.image_url}`}
                                     price={product.price}
-                                    onAddToCart={_ =>  null}
+                                    onAddToCart={_ =>  dispatch(addItem(product))}
                                 />
                        </div>
                        })}
@@ -78,7 +100,10 @@ export default function Home() {
                </div>
 
                <div className="w-full md:w-1/4 h-full shadow-lg border-r border-white bg-gray-100">
-                   Keranjang belanja disini
+                   <Cart items={cart} 
+                        onItemDec={item => dispatch(removeItem(item))}
+                        onItemInc={item => dispatch(addItem(item))}
+                   />
                </div>
               
            </div>}

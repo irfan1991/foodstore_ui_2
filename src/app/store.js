@@ -6,6 +6,7 @@ import thunk from 'redux-thunk'
 
 import authReducer from '../features/Auth/reducer';
 import productReducer from '../features/Products/reducer'
+import cartReducer from '../features/Cart/reducer'
 
 //membuat composer enhencer untuk menghubungkan ke devtolls 
 const composerEnhancer = window._REDUX_DEVTOOLS_EXTENTION_COMPOSE || compose;
@@ -13,6 +14,7 @@ const composerEnhancer = window._REDUX_DEVTOOLS_EXTENTION_COMPOSE || compose;
 // gabung reducer 
 const rootReducers = combineReducers({
     auth : authReducer,
+    cart : cartReducer,
     products : productReducer
 });
 
