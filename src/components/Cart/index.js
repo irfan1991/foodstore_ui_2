@@ -42,7 +42,7 @@ export default function Cart({items, onItemInc, onItemDec, onCheckout}) {
                     <CardItem
                         imgUrl={`${config.api_host}/upload/${item.image_url}`}
                         name ={item.name}
-                        gty={item.qty}
+                        qty={item.qty}
                         color="green"
                         onInc={_=> onItemInc(item)}
                         onDec={_=> onItemDec(item)}

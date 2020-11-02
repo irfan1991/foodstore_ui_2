@@ -25,8 +25,9 @@ export default function reducer(state = initialState, action) {
           
 
         case REMOVE_ITEM:       
-            return state.map(item => ({...item, qty : item._id === action.item_id ? item.qty - 1: item.qty}))
+            return state.map(item => ({...item, qty : item._id === action.item._id ? item.qty - 1: item.qty}))
             .filter(item => item.qty > 0)
+
 
         case CLEAR_ITEMS:       
             return [];
