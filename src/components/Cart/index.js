@@ -1,11 +1,41 @@
 import React from 'react'
 import {arrayOf, string , shape, oneOfType, number, func} from 'prop-types'
-import { CardItem } from "upkit";
+import { CardItem, Button , Text} from "upkit";
 import { config } from "../../config";
+import FaArrowRight from "@meronex/icons/fa/FaArrowRight";
+import FaCartPlus from "@meronex/icons/fa/FaCartPlus";
+import {  sumPrice } from "../../utils/sum-price";
+import { formatRupiah } from "../../utils/format-rupiah";
+export default function Cart({items, onItemInc, onItemDec, onCheckout}) {
 
-export default function Cart({items, onItemInc, onItemDec}) {
+    let total = sumPrice(items);
+
     return (
         <div>
+
+            <div className="text-3xl flex items-center text-green-600">
+                <FaCartPlus />
+                <div className="ml-2">
+                    Keranjang
+                </div>
+            </div>  
+
+            <Text as="h5">
+            Total : {formatRupiah(total)}
+            </Text>
+          
+            <div className="px-2 border-b mt-5 pb-5">
+             <Button 
+                text="Checkout"
+                fitContainer
+                iconAfter={<FaArrowRight/>}
+                disabled={!items.length}
+                onClick={onCheckout}
+                
+            />
+            </div>
+
+            <div className="p-2">
             {!items.length ? <div className="text-center text-sm text-green-700">Belum ada items dalam keranjang</div> : null }
             {items.map((item,index) => {
                 return  <div key={index} className="mb-2">
@@ -17,8 +47,13 @@ export default function Cart({items, onItemInc, onItemDec}) {
                         onInc={_=> onItemInc(item)}
                         onDec={_=> onItemDec(item)}
                     />
+
+                   
                 </div>
             })}
+            </div>
+           
+
         </div>
     )
 }
@@ -30,5 +65,6 @@ Cart.propTypes = {
         qty : oneOfType([string, number]).isRequired
     })),
     onItemInc : func,
-    onItemDec : func
+    onItemDec : func,
+    onCheckout : func
 }

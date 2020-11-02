@@ -9,12 +9,15 @@ import BounceLoader from 'react-spinners/BounceLoader';
 import { tags } from "./tags";
 import Cart from '../../components/Cart'
 import { addItem , removeItem} from "../../features/Cart/actions";
+import { useHistory } from "react-router-dom";
 
 export default function Home() {
    
     let dispatch = useDispatch()
     let  products = useSelector(state => state.products);
+    let history = useHistory();
     let cart = useSelector(state => state.cart);
+    
 
     useEffect(() => {
         dispatch(fetchProducts())
@@ -103,6 +106,7 @@ export default function Home() {
                    <Cart items={cart} 
                         onItemDec={item => dispatch(removeItem(item))}
                         onItemInc={item => dispatch(addItem(item))}
+                        onCheckout={_ => history.push("/checkout")}
                    />
                </div>
               
