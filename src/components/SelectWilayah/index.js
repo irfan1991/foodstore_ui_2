@@ -14,7 +14,16 @@ export default function SelectWilayah({tingkat, kodeInduk , onChange, value}) {
         setIsFetching(true);
 
         axios.get(`${config.api_host}/api/wilayah/${tingkat}?kode_induk=${kodeInduk}`)
-            .then(({data}) => setData(data))
+            .then(({data}) => {
+
+                if(!data.error) {
+                    setData(data)    
+                } else {
+                    console.log(data.error);
+                    
+                }
+
+            })
             .finally(_=> setIsFetching(false))
        
     }, [kodeInduk, tingkat])

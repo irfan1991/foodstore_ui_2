@@ -2,25 +2,30 @@ import axios from 'axios'
 
 import { config } from "../config";
 
-export async function getAddress(params) {
-    let {token} = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : {};
 
- 
-    return await axios.get(`${config.api_host}/api/delivery-addresses`, {
+export async function getOrders(params) {
+    
+    let {token} = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : {};
+    let {limit , page} = params;
+    let skip = (page * limit) - limit ;
+
+    return await axios.get(`${config.api_host}/api/orders`,{
         params : {
-            limit : params.limit,
-            skip :  params.page * params.limit - params.limit 
+            skip,
+            limit
         },
         headers : {
             authorization : `Bearer ${token}`
         }
     })
+
 }
 
-export async function createAddress(payload) {
+export async function createOrder(payload) {
     let {token} = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : {};
 
-    return await axios.post(`${config.api_host}/api/delivery-addresses`, payload ,{
+    return await axios.post(`${config.api_host}/api/orders`, payload, {
+       
         headers : {
             authorization : `Bearer ${token}`
         }

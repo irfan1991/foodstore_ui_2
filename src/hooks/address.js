@@ -18,6 +18,8 @@ export function useAddressData() {
     const [limit, setLimit] = useState(10);
 
     let fecthAddress = useCallback(async function () {
+        setStatus(statuslist.process)
+
         let {data : {data, count , error}} = await getAddress({page, limit});
 
         if (error) {

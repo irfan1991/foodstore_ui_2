@@ -14,6 +14,7 @@ import { getCart } from "./api/cart";
 import Checkout from './pages/Checkout'
 import UserAddressAdd from './pages/UserAddressAdd'
 import UserAddress from './pages/UserAddress'
+import Invoice from './pages/Invoice'
 
 function App() {
 
@@ -43,6 +44,9 @@ function App() {
          </Route>
          <Route path="/checkout">
            <Checkout />
+         </Route>
+         <Route path="/invoice/:order_id">
+           <Invoice />
          </Route>
        </Switch>
      </Router>
