@@ -15,6 +15,9 @@ import Checkout from './pages/Checkout'
 import UserAddressAdd from './pages/UserAddressAdd'
 import UserAddress from './pages/UserAddress'
 import Invoice from './pages/Invoice'
+import UserAccount from './pages/UserAccount'
+import UserOrders from './pages/UserOrders'
+import Logout from './pages/Logout'
 
 function App() {
 
@@ -44,6 +47,15 @@ function App() {
          </Route>
          <Route path="/checkout">
            <Checkout />
+         </Route>
+         <Route path="/account">
+           <UserAccount />
+         </Route>
+         <Route path="/pesanan">
+           <UserOrders />
+         </Route>
+         <Route path="/logout">
+           <Logout />
          </Route>
          <Route path="/invoice/:order_id">
            <Invoice />

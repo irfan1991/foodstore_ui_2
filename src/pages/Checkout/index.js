@@ -89,7 +89,7 @@ export default function Checkout() {
     let history = useHistory();
     let dispatch = useDispatch();
 
-    async function handleCreateOrder(params) {
+    async function handleCreateOrder() {
         
         let payload = {
             delivery_fee: config.global_ongkir,
@@ -97,9 +97,10 @@ export default function Checkout() {
         }
 
         let {data } = await createOrder(payload);
+console.log(data);
 
         //jika ada error
-        if(data?.error) return ;
+    if(data?.error) return <div>{data?.error}</div>;
 
         history.push(`/invoice/${data._id}`);
         dispatch(clearItems);    
@@ -119,15 +120,6 @@ export default function Checkout() {
             active={activeStep}
             />
 
-            {/* <button onClick={_ => setActiveStep(0)}>ke langkah pertama</button>  
-            <button onClick={_ => setActiveStep(1)}>ke langkah kedua</button>  
-            <button onClick={_ => setActiveStep(2)}>ke langkah ketiga</button>      
-
-            <br />
-            <br />
-
-             <button onClick={_ => setActiveStep(activeStep - 1)}>ke langkah sebelumnya></button> 
-             <button onClick={_ => setActiveStep(activeStep + 1)}>ke langkah berikutnya></button>       */}
 
              {activeStep === 0 ?
             <div>
