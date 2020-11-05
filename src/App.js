@@ -18,6 +18,8 @@ import Invoice from './pages/Invoice'
 import UserAccount from './pages/UserAccount'
 import UserOrders from './pages/UserOrders'
 import Logout from './pages/Logout'
+import GuarRoute from './components/GuardRoute'
+import GuestOnlyRoute from './components/GuestOnlyRoute'
 
 function App() {
 
@@ -32,34 +34,38 @@ function App() {
      <Router>
        <Switch>
        <Route path="/" component={Home} exact />
-         <Route path="/register" component={Register} exact />
-         <Route path="/register/berhasil">
+         <GuestOnlyRoute path="/register">
+           <Register/>
+         </GuestOnlyRoute> 
+         <GuestOnlyRoute path="/register/berhasil">
            <RegisterSuccess />
-         </Route>
-         <Route path="/login">
+         </GuestOnlyRoute>
+         <GuestOnlyRoute path="/login">
            <Login />
-         </Route>
-         <Route path="/alamat-pengirim/tambah">
+         </GuestOnlyRoute>
+         <GuarRoute path="/alamat-pengirim/tambah">
            <UserAddressAdd />
-         </Route>
-         <Route path="/alamat-pengirim">
+         </GuarRoute>
+         <GuarRoute path="/alamat-pengirim">
            <UserAddress />
-         </Route>
-         <Route path="/checkout">
+         </GuarRoute>
+         <GuarRoute path="/checkout">
            <Checkout />
-         </Route>
-         <Route path="/account">
+         </GuarRoute>
+         <GuarRoute path="/account">
            <UserAccount />
-         </Route>
+         </GuarRoute>
          <Route path="/pesanan">
-           <UserOrders />
+           <GuarRoute>
+            <UserOrders />
+           </GuarRoute>   
          </Route>
-         <Route path="/logout">
+         <GuarRoute path="/logout">
            <Logout />
-         </Route>
-         <Route path="/invoice/:order_id">
+         </GuarRoute>
+         <GuarRoute path="/invoice/:order_id">
            <Invoice />
-         </Route>
+         </GuarRoute>
        </Switch>
      </Router>
    </Provider>

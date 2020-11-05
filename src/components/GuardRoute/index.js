@@ -1,11 +1,13 @@
 import React from 'react'
 import { Route , Redirect} from 'react-router-dom'
-import { useSelector } from "react-reduxt";
+import { useSelector } from "react-redux";
 
 export default function GuardRoute({children , ...rest}) {
+    
+    let {user} = useSelector(state => state.auth);
     return (
-        <div>
-            
-        </div>
+       <Route {...rest}>
+           {user  ? children  : <Redirect to="/login" />}
+       </Route>
     )
 }
